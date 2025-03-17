@@ -13,11 +13,24 @@ Onde:
 - **Basis**: Valor informado pelo usuário no request.
 - **Fator de conversão**: Valor padrão para calculo de conversão de 1.10231
 
-## Requisitos do Endpoint
-- Deve ser um **endpoint HTTP** (ex: REST API).
-- Deve aceitar **apenas** dois parâmetros: `basis` e  `contract_month`.
-- Deve buscar o **último preço futuro disponível** na base de dados.
+---
+
+## **📡 Requisitos do Endpoint**
+- Deve ser um **endpoint HTTP POST** (REST API).
+- Deve aceitar um JSON contendo:
+  - `basis` (valor numérico que pode ser negativo ou positivo).
+  - `contract_months` (lista de contratos futuros).
+- Deve buscar o **último preço futuro disponível** no banco de dados para cada `contract_month`.
 - Deve calcular e retornar o **Flat Price**.
+- Deve fornecer respostas padronizadas e tratamento de erros.
+
+---
+
+
+### **📩 Requisição (HTTP POST)**
+```http
+POST /api/flat_price
+Content-Type: application/json
 
 ## Exemplo de Requisição e Resposta
 ### **Requisição (HTTP POST)**
@@ -29,7 +42,7 @@ Content-Type: application/json
 ```json
 {
   "basis": -5.00,
-  "contract_month": "MARCH25"
+  "contract_months": ["MAY24", "JUL24"]
 }
 ```
 
@@ -37,25 +50,47 @@ Content-Type: application/json
 ### **Resposta (JSON)**
 ```json
 {
-  "cbot_price": 305.50,
-  "basis": -5.0,
-  "flat_price": 331.24
+
+  "results": [
+    {
+      "contract_month": "MAY24",
+      "cbot_price": 450.00,
+      "basis": -5.00,
+      "flat_price": 403.74
+    },
+    {
+      "contract_month": "JUL24",
+      "cbot_price": 460.00,
+      "basis": -5.00,
+      "flat_price": 413.29
+    }
+  ]
 }
+
 ```
 
 ## Banco de Dados
 A tabela que armazena os preços futuros deve ter a seguinte estrutura:
 
 ```sql
-CREATE TABLE cbot_prices (
+CREATE TABLE soybean_meal_prices (
     id SERIAL PRIMARY KEY,
-    contract_month VARCHAR(10),
-    price DECIMAL(10,2),
+    contract_month VARCHAR(10) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
 O endpoint deve buscar o **preço mais recente** inserido nesta tabela.
+
+## **❌ Tratamento de Erros**
+O sistema deve retornar respostas padronizadas para diferentes cenários de erro:
+
+| **Cenário**                      | **Código HTTP**            | **Exemplo de Resposta** |
+|----------------------------------|---------------------------|-------------------------|
+| `contract_month` não encontrado | `404 Not Found`           | `{ "error": "Contract month MAY24 not found" }` |
+| `basis` inválido                | `400 Bad Request`         | `{ "error": "Basis must be a number between -50 and 50" }` |
+| Erro interno do servidor        | `500 Internal Server Error` | `{ "error": "Unexpected server error" }` |
 
 ## Bônus
 Para aprimorar sua solução, você pode:
