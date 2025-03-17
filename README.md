@@ -31,12 +31,6 @@ Onde:
 ```http
 POST /api/flat_price
 Content-Type: application/json
-
-## Exemplo de Requisição e Resposta
-### **Requisição (HTTP POST)**
-```http
-POST /api/flat_price
-Content-Type: application/json
 ```
 
 ```json
