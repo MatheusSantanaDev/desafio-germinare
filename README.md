@@ -6,11 +6,12 @@ O desafio consiste em criar um endpoint que receba o valor do **Basis** (prêmio
 ## Regras do Cálculo
 O **Flat Price** da soja é definido pela seguinte fórmula:
 
-\[ \text{Flat Price} = \text{Preço Futuro (CBOT)} + \text{Basis} \]
+Flat Price = (Preço Futuro (CBOT) + Basis)*Fator de conversão
 
 Onde:
-- **Preço Futuro (CBOT)**: Cotação do contrato futuro de soja, armazenada no banco de dados.
+- **Preço Futuro (CBOT)**: Cotação do contrato futuro de farelo soja, armazenada no banco de dados.
 - **Basis**: Valor informado pelo usuário no request.
+- **Fator de conversão**: Valor padrão para calculo de conversão de 1.10231
 
 ## Requisitos do Endpoint
 - Deve ser um **endpoint HTTP** (ex: REST API).
@@ -27,9 +28,9 @@ GET /api/flat_price?basis=-0.50
 ### **Resposta (JSON)**
 ```json
 {
-  "cbot_price": 13.50,
-  "basis": -0.50,
-  "flat_price": 13.00
+  "cbot_price": 305.50,
+  "basis": -5.0,
+  "flat_price": 331.24
 }
 ```
 
