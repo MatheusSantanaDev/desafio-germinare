@@ -1,0 +1,93 @@
+# Ignora arquivos específicos do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ignora arquivos específicos do Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+
+# Ignora arquivos específicos do FastAPI
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignora arquivos de IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Ignora arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignora arquivos de ambiente virtual
+.env/
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignora arquivos de banco de dados (SQLite, etc.)
+*.sqlite3
+*.db
+*.sql
+
+# Ignora arquivos de cache
+.cache
+.pytest_cache/
+.mypy_cache/
+
+# Ignora arquivos de cobertura de testes
+.coverage
+htmlcov/
+.coverage.*
+.coverage
+*,cover
+
+# Ignora arquivos de logs
+*.log
+logs/
+
+# Ignora arquivos de pacotes Python
+*.whl
+*.tar.gz
+*.zip
+
+# Ignora arquivos de configuração local
+.env
+.env.local
+.env.dev
+.env.prod
+.env.test
