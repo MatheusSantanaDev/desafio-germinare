@@ -11,7 +11,7 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # Acessa a tabela mapeada
-SoybeanMealPrice = Base.classes.migrations_soybeanmealprice
+SoybeanMeal = Base.classes.tables_soybeanmealprices
 
 def get_db():
     db = SessionLocal()

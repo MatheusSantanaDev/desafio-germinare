@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from my_app.models import SoybeanMealPrice, Base
+from my_app.models import SoybeanMeal, Base
 
 @pytest.fixture
 def db_session():
@@ -13,10 +13,10 @@ def db_session():
     session.close()
 
 def test_soybean_meal_price_model(db_session):
-    price = SoybeanMealPrice(contract_month="Jan2024", price=100.50)
+    price = SoybeanMeal(contract_month="Jan2024", price=100.50)
     db_session.add(price)
     db_session.commit()
 
-    result = db_session.query(SoybeanMealPrice).filter(SoybeanMealPrice.contract_month == "Jan2024").first()
+    result = db_session.query(SoybeanMeal).filter(SoybeanMeal.contract_month == "Jan2024").first()
     assert result is not None
     assert result.price == 100.50

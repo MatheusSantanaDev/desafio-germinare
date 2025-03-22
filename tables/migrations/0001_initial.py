@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='SoybeanMealPrice',
+            name='SoybeanMeal',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('contract_month', models.CharField(max_length=10, unique=True)),

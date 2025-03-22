@@ -1,19 +1,15 @@
-from fastapi import APIRouter, HTTPException, Depends
-from .services import SoybeanMealService
-from .repositories import SoybeanMealRepository
+from fastapi import APIRouter, Depends
+from .services import FlatPriceService
+from .repositories import FlatPriceRepository
 from utils.db import get_db
-from .schemas import FlatPriceRequest, FlatPriceResponse, FlatPriceResults
+from .schemas import FlatPriceRequest
 
 router = APIRouter()
 
-@router.post("/api/flat_price", response_model=FlatPriceResults)
+@router.post("/api/flat_price")
 def calculate_flat_price(request: FlatPriceRequest, db=Depends(get_db)):
-    
-    repository = SoybeanMealRepository(db)
-    service = SoybeanMealService(repository)
+    repository = FlatPriceRepository(db)
+    service = FlatPriceService(repository)
 
-    try:
-        results = service.calculate_flat_prices(request.basis, request.contract_months)
-        return {"results": results}
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    response = service.calculate_flat_prices(request.basis, request.contract_months)
+    return response

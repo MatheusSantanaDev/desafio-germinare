@@ -1,7 +1,7 @@
 from django.db import migrations, models
 
 def add_initial_data(apps, schema_editor):
-    SoybeanMealPrice = apps.get_model('migrations', 'SoybeanMealPrice')
+    SoybeanMeal = apps.get_model('tables', 'SoybeanMeal')
     
     # Dados iniciais
     initial_data = [
@@ -14,17 +14,17 @@ def add_initial_data(apps, schema_editor):
 
     # Insere os dados no banco
     for data in initial_data:
-        SoybeanMealPrice.objects.create(**data)
+        SoybeanMeal.objects.create(**data)
 
 def remove_initial_data(apps, schema_editor):
-    SoybeanMealPrice = apps.get_model('migrations', 'SoybeanMealPrice')
+    SoybeanMeal = apps.get_model('tables', 'SoybeanMeal')
     
     # Remove os dados iniciais
-    SoybeanMealPrice.objects.filter(contract_month__in=["NOV24", "DEC24", "JAN25", "FEB25", "MAR25"]).delete()
+    SoybeanMeal.objects.filter(contract_month__in=["NOV24", "DEC24", "JAN25", "FEB25", "MAR25"]).delete()
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('migrations', '0001_initial'),
+        ('tables', '0001_initial'),
     ]
 
     operations = [
