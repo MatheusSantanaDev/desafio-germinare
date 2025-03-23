@@ -8,7 +8,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Mapeia as tabelas existentes no banco de dados
 Base = automap_base()
-Base.prepare(engine, reflect=True)
+Base.prepare(autoload_with=engine)
 
 # Acessa a tabela mapeada
 SoybeanMeal = Base.classes.tables_soybeanmealprices

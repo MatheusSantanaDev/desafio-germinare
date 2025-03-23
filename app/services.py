@@ -8,6 +8,9 @@ class FlatPriceService:
         self.repository = repository
 
     def validate_basis(self, basis: float) -> None:
+        if not isinstance(basis, (float, int)):
+            raise InvalidInputError()
+
         if not (-50 <= basis <= 50):
             raise InvalidBasis()
 
