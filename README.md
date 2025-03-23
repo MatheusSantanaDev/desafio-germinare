@@ -1,5 +1,22 @@
 # Desafio: Criando um Endpoint para Cálculo do Flat Price da Soja
 
+## Execuçao do Projeto
+
+### Requisitos
+* **Python 3.11**
+
+No diretorio principal do projeto, execute:
+
+> ```bash
+> chmod +x setup_and_run.sh
+> ./setup_and_run.sh
+> ```
+Esse pipeline configura o ambiente com os pacotes necessarios, faz as migrations necessarias e coloca a aplicação up. **Sempre que quiser subir a aplicação pode executar** ```./setup_and_run.sh```, ou uma vez configurado é possivel usar:
+
+```python
+uvicorn app.main:app --reload
+```
+
 ## Objetivo
 O desafio consiste em criar um endpoint que receba dois valores, **Basis** (prêmio de exportação) e **Mês do contrato** (contract_month) e retorne o **Flat Price** do farelo de soja. O preço futuro do farelo de soja será obtido a partir de uma tabela armazenada no banco de dados. Você pode utilizar a linguagem que preferir.
 
