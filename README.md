@@ -5,7 +5,7 @@
 ### Requisitos
 * **Python 3.11**
 
-No diretorio principal do projeto, execute:
+No diretorio principal do projeto faça o ***.env*** pessoal seguindo o ***.example.env***, em seguida execute:
 
 > ```bash
 > chmod +x setup_and_run.sh
