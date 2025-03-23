@@ -1,11 +1,20 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
-from .exceptions import ContractMonthNotFound, InvalidBasis, InternalServerError
+from fastapi.exceptions import RequestValidationError
+from .exceptions import ContractMonthNotFound, InvalidBasis, InternalServerError, InvalidInputError
 from .views import router as fastapi_app
 from utils.logging import logger
 
 app = FastAPI()
 app.include_router(fastapi_app)
+
+@app.exception_handler(InvalidBasis)
+async def invalid_basis_handler(request: Request, exc: InvalidBasis):
+    logger.error(f"InvalidBasis: {exc.detail}")
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": exc.detail},
+    )
 
 @app.exception_handler(ContractMonthNotFound)
 async def contract_month_not_found_handler(request: Request, exc: ContractMonthNotFound):
@@ -15,13 +24,13 @@ async def contract_month_not_found_handler(request: Request, exc: ContractMonthN
         content={"error": exc.detail},
     )
 
-@app.exception_handler(InvalidBasis)
-async def invalid_basis_handler(request: Request, exc: InvalidBasis):
-    logger.error(f"InvalidBasis: {exc.detail}")
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"error": exc.detail},
-    )
+@app.exception_handler(RequestValidationError)
+async def request_validation_error_handler(request: Request, exc: RequestValidationError):
+    logger.error(f"RequestValidationError: {exc}")  
+    for error in exc.errors():
+        if error["type"] == "json_invalid":
+            raise InvalidInputError()
+    
 
 @app.exception_handler(InternalServerError)
 async def internal_server_error_handler(request: Request, exc: InternalServerError):

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Union, Dict, Any
 
 # Modelo de requisição para o endpoint /api/flat_price
 class FlatPriceRequest(BaseModel):
@@ -15,4 +15,4 @@ class FlatPriceResponse(BaseModel):
 
 # Modelo de resposta completo para o endpoint /api/flat_price
 class FlatPriceResults(BaseModel):
-    results: List[FlatPriceResponse]
+    results: List[Union[FlatPriceResponse, Dict[str, Any]]] 
